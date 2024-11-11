@@ -43,7 +43,6 @@ class HttpClient {
 
     if (this.isObject(options.body) || !(options.body instanceof FormData)) {
       this.setHeader(options, 'Content-Type', 'application/json')
-      options.body = JSON.stringify(options.body)
     }
 
     const url = import.meta.env.VITE_API_URL + path
