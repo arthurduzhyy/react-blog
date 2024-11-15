@@ -1,12 +1,13 @@
 import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from 'react-router-dom'
-import LoginPage from '../feature/auth/LoginPage'
 import Layout from '../component/layout/Layout'
 import NotFoundPage from '../component/NotFoundPage'
+import Root from '../component/Root'
+import LoginPage from '../feature/auth/LoginPage'
 
 const BasicDataRouter = () => {
   const router = createBrowserRouter(
     createRoutesFromElements(
-      <Route path="/">
+      <Route path="/" Component={Root}>
         <Route path="/" Component={Layout}>
           <Route path="*" Component={NotFoundPage} />
         </Route>
