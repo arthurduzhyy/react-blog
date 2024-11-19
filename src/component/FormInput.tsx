@@ -9,7 +9,7 @@ interface FormInputProps {
   errors: any
 }
 
-const FormInput: React.FC<FormInputProps> = ({ name, type, placeholder, options, register, errors, isRequired }) => {
+const FormInput: React.FC<FormInputProps> = ({ name, type, placeholder, options, register, errors }) => {
   return (
     <div>
       <input type={type} name={name} id={name} placeholder={placeholder}
