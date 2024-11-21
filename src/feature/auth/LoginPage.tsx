@@ -1,4 +1,5 @@
 import { useForm } from 'react-hook-form'
+import { useNavigate } from 'react-router-dom'
 import FormInput from '../../component/FormInput'
 import LoginService from './service/auth.service'
 
@@ -6,18 +7,23 @@ const loginService = new LoginService()
 
 const LoginPage = () => {
   const { register, handleSubmit, formState: { errors } } = useForm()
+  const navigate = useNavigate()
   const onSubmit = async (data) => {
     if (Object.keys(errors).length > 0) {
       return
     }
     try {
       const response = await loginService.login(data)
+      if (response.ok) {
+        navigate('/')
+      }
     } catch (error) {
       console.error('Login failed:', error)
     }
   }
 
-  return <section className="bg-gray-50 dark:bg-gray-900">
+  return (
+    <section className="bg-gray-50 dark:bg-gray-900">
     <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
       <div
         className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
@@ -30,38 +36,38 @@ const LoginPage = () => {
               <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                 Your email
               </label>
-             <FormInput
-               name={"email"}
-               type={"email"}
-               placeholder={"test@example.com"}
-               options={{
-                 required: 'Email is required',
-                 pattern: {
-                   value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
-                   message: 'Invalid email address'
-                 }
-               }}
-               register={register}
-               errors={errors}
-               />
+              <FormInput
+                name={'email'}
+                type={'email'}
+                placeholder={'test@example.com'}
+                options={{
+                  required: 'Email is required',
+                  pattern: {
+                    value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
+                    message: 'Invalid email address'
+                  }
+                }}
+                register={register}
+                errors={errors}
+              />
             </div>
             <div>
               <label htmlFor="password"
                      className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
-                <FormInput
-                    name={"password"}
-                    type={"password"}
-                    placeholder={"Your password"}
-                    options={{
-                        required: 'Password is required',
-                        minLength: {
-                        value: 6,
-                        message: 'Password must have at least 6 characters'
-                        }
-                    }}
-                    register={register}
-                    errors={errors}
-                />
+              <FormInput
+                name={'password'}
+                type={'password'}
+                placeholder={'Your password'}
+                options={{
+                  required: 'Password is required',
+                  minLength: {
+                    value: 6,
+                    message: 'Password must have at least 6 characters'
+                  }
+                }}
+                register={register}
+                errors={errors}
+              />
             </div>
             <button type="submit"
                     className="w-full text-white bg-primary-600 hover:bg-primary-700
@@ -73,13 +79,14 @@ const LoginPage = () => {
             </button>
             <p className="text-sm font-light text-gray-500 dark:text-gray-400">
               Don’t have an account yet?
-              <a href="#" className="font-medium text-primary-600 hover:underline dark:text-primary-500">Sign up</a>
+              <a href="/register" className="font-medium text-primary-600 hover:underline dark:text-primary-500">Sign up</a>
             </p>
           </form>
         </div>
       </div>
     </div>
   </section>
+  )
 }
 
 export default LoginPage

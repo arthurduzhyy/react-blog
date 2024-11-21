@@ -3,6 +3,7 @@ import Layout from '../component/layout/Layout'
 import NotFoundPage from '../component/NotFoundPage'
 import Root from '../component/Root'
 import LoginPage from '../feature/auth/LoginPage'
+import RegisterPage from '../feature/auth/RegisterPage'
 
 const BasicDataRouter = () => {
   const router = createBrowserRouter(
@@ -12,6 +13,7 @@ const BasicDataRouter = () => {
           <Route path="*" Component={NotFoundPage} />
         </Route>
         <Route path="/login" Component={LoginPage}/>
+        <Route path="/register" Component={RegisterPage}/>
       </Route>
     )
   )

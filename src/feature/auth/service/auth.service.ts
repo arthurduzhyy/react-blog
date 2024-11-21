@@ -1,5 +1,5 @@
 import HttpClient from '../../../lib/http'
-import { LoginForm } from './types'
+import { LoginForm, RegisterForm } from './types'
 
 class AuthService {
   private httpClient: HttpClient
@@ -20,9 +20,27 @@ class AuthService {
       }
       const result = await response.json()
       this.httpClient.setToken(result.token)
-      return result
+      return response
     } catch (error) {
       console.error('Error during login:', error)
+      throw error
+    }
+  }
+
+  public async register(data: RegisterForm): Promise<Response> {
+    try {
+      const response = await this.httpClient.post('/users/register', {
+        body: JSON.stringify(data),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      if (!response.ok) {
+        throw new Error('Registration failed')
+      }
+      return response
+    } catch (error) {
+      console.error('Error during registration:', error)
       throw error
     }
   }
