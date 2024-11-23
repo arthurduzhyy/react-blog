@@ -1,4 +1,4 @@
-import { useTheme } from '../../context/ThemeContext'
+import { useTheme } from './context/ThemeContext'
 import { SunIcon, MoonIcon } from '@heroicons/react/24/solid'
 
 const ThemeToggleButton = () => {

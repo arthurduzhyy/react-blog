@@ -1,4 +1,4 @@
-import { ThemeProvider } from './context/ThemeContext'
+import { ThemeProvider } from './feature/theme/context/ThemeContext'
 import BasicDataRouter from './route/BasicDataRouter'
 
 function App() {
