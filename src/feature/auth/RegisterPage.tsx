@@ -1,3 +1,4 @@
+import { Button } from '@material-tailwind/react'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 import FormInput from '../../component/FormInput'
@@ -116,19 +117,25 @@ const RegisterPage = () => {
                 errors={errors}
               />
             </div>
-            <button type="submit"
-                    className="w-full text-white bg-primary-600 hover:bg-primary-700
-                    focus:ring-4 focus:outline-none focus:ring-primary-300
+            <Button type="submit"
+                    className="w-full text-dark bg-gray-400 hover:bg-gray-500
+                    focus:ring-4 focus:outline-none focus:ring-primary-300 border-b-blue-gray-600
                     font-medium rounded-lg text-sm px-5 py-2.5 text-center
-                    dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
-              Register
-            </button>
-            <p className="text-sm font-light text-gray-500 dark:text-gray-400">
-              Already have an account?
-              <a href="/login" className="font-medium text-primary-600 hover:underline dark:text-primary-500">
+                    dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 dark:text-white dark:ring-primary-800
+                    dark:border-primary-800 dark:dark:text-white dark:dark:hover:bg-primary-700 dark:dark:bg-primary-600 dark:dark:focus:ring-primary-800 dark:dark:border-primary-800
+                    "
+            >
+              Sign up
+            </Button>
+            <div className="flex justify-between">
+              <p className="text-sm font-light text-gray-500 dark:text-gray-400">
+                Already have an account?
+              </p>
+              <a href="/login" className="text-sm font-light text-gray-500 dark:text-gray-400">
                 Sign in
               </a>
-            </p>
+            </div>
+
           </form>
         </div>
       </div>
