@@ -1,6 +1,7 @@
 import classNames from 'classnames'
 import { FC, useState } from 'react'
 import { Link } from 'react-router-dom'
+import ThemeToggleButton from '../../feature/theme/ThemeToggleButton'
 
 type DropdownItem = {
   label: string
@@ -42,6 +43,7 @@ const Dropdown: FC<DropdownProps> = ({ isOpen, toggleDropdown, items }) => {
           </li>
         ))}
       </ul>
+
       <div className="py-1">
         <a
           href="#"
@@ -107,7 +109,7 @@ const Navbar = () => {
               />
             </svg>
           </button>
-
+          <ThemeToggleButton />
           <button onClick={toggleDropdown} aria-label="User menu" className="relative">
             <svg
               className="w-10 h-7 text-gray-800 dark:text-white"

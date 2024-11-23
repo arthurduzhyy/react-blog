@@ -1,9 +1,12 @@
+import { ThemeProvider } from './context/ThemeContext'
 import BasicDataRouter from './route/BasicDataRouter'
 
 function App() {
-  return <>
-    <BasicDataRouter/>
-  </>
+  return (
+    <ThemeProvider>
+      <BasicDataRouter />
+    </ThemeProvider>
+  )
 }
 
 export default App
