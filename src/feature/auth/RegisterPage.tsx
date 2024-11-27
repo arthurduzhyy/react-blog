@@ -2,26 +2,24 @@ import { Button } from '@material-tailwind/react'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 import FormInput from '../../component/FormInput'
-import RegisterService from './service/auth.service'
+import AuthService from './service/auth.service'
 import { RegisterForm } from './service/types'
 
-const registerService = new RegisterService()
-
 const RegisterPage = () => {
-  const { register, handleSubmit, formState: { errors } } = useForm<RegisterForm>()
+  const {
+    register,
+    handleSubmit,
+    formState: { errors }
+  } = useForm<RegisterForm>()
+
   const navigate = useNavigate()
 
+  const authService = new AuthService()
+
   const onSubmit: SubmitHandler<RegisterForm> = async (data) => {
-    if (Object.keys(errors).length > 0) {
-      return
-    }
-    try {
-      const response = await registerService.register(data)
-      if (response.ok) {
-        navigate('/login')
-      }
-    } catch (error) {
-      console.error('Registration failed.:', error)
+    const response = await authService.register(data)
+    if (response) {
+      navigate('/login')
     }
   }
 

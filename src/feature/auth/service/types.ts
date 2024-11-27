@@ -3,6 +3,10 @@ export interface LoginForm {
   password: string
 }
 
+export interface LoginResponse {
+  token: string
+}
+
 export interface RegisterForm {
   firstName: string
   lastName: string

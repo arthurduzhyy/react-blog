@@ -1,5 +1,5 @@
 import HttpClient from '../../../lib/http'
-import { LoginForm, RegisterForm } from './types'
+import { LoginForm, LoginResponse, RegisterForm } from './types'
 
 class AuthService {
   private httpClient: HttpClient
@@ -8,40 +8,28 @@ class AuthService {
     this.httpClient = new HttpClient()
   }
 
-  public async login(data: LoginForm): Promise<Response> {
+  public async login(data: LoginForm): Promise<LoginResponse | null> {
     try {
-      console.log(data)
-      const response = await this.httpClient.post('/users/login', {
+      const response = await this.httpClient.post<LoginResponse>('/users/login', {
         body: JSON.stringify(data)
       })
-      console.log(JSON.stringify(data))
-      if (!response.ok) {
-        throw new Error('Login failed')
-      }
-      const result = await response.json()
-      this.httpClient.setToken(result.token)
+      this.httpClient.setToken(response.token)
       return response
-    } catch (error) {
-      console.error('Error during login:', error)
-      throw error
+    } catch (e) {
+      console.error('Error during login:', e)
+      return null
     }
   }
 
-  public async register(data: RegisterForm): Promise<Response> {
+  public async register(data: RegisterForm): Promise<boolean> {
     try {
-      const response = await this.httpClient.post('/users/register', {
-        body: JSON.stringify(data),
-        headers: {
-          'Content-Type': 'application/json'
-        }
+      await this.httpClient.post('/users/register', {
+        body: JSON.stringify(data)
       })
-      if (!response.ok) {
-        throw new Error('Registration failed')
-      }
-      return response
+      return true
     } catch (error) {
       console.error('Error during registration:', error)
-      throw error
+      return false
     }
   }
 
