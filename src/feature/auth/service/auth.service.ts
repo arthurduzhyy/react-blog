@@ -44,6 +44,10 @@ class AuthService {
       throw error
     }
   }
+
+  public logout() {
+    this.httpClient.setToken(undefined)
+  }
 }
 
 export default AuthService
