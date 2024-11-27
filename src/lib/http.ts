@@ -18,23 +18,23 @@ class HttpClient {
     return this.accessToken
   }
 
-  public get(path: string, options: RequestInitOptions = {}): Promise<Response> {
-    return this.request(path, options)
+  public get<T>(path: string, options: RequestInitOptions = {}): Promise<T> {
+    return this.request<T>(path, options)
   }
 
-  public post(path: string, options: RequestInitOptions = {}): Promise<Response> {
-    return this.request(path, { ...options, method: 'POST' })
+  public post<T>(path: string, options: RequestInitOptions = {}): Promise<T> {
+    return this.request<T>(path, { ...options, method: 'POST' })
   }
 
-  public put(path: string, options: RequestInitOptions = {}): Promise<Response> {
-    return this.request(path, { ...options, method: 'PUT' })
+  public put<T>(path: string, options: RequestInitOptions = {}): Promise<T> {
+    return this.request<T>(path, { ...options, method: 'PUT' })
   }
 
-  public delete(path: string, options: RequestInitOptions = {}): Promise<Response> {
-    return this.request(path, { ...options, method: 'DELETE' })
+  public delete<T>(path: string, options: RequestInitOptions = {}): Promise<T> {
+    return this.request<T>(path, { ...options, method: 'DELETE' })
   }
 
-  private request(path: string, options: RequestInitOptions = {}): Promise<Response> {
+  private async request<T>(path: string, options: RequestInitOptions = {}): Promise<T> {
     if (this.accessToken) {
       this.setHeader(options, 'Authorization', 'Bearer ' + this.accessToken)
     }
@@ -46,7 +46,13 @@ class HttpClient {
     }
 
     const url = import.meta.env.VITE_API_URL + path
-    return fetch(url, options)
+    const response = await fetch(url, options)
+
+    if (!response.ok) {
+      throw new Error(`Request failed with status ${response.status}`)
+    }
+
+    return response.json()
   }
 
   private setHeader(options: RequestInitOptions, header: string, value: string): void {
