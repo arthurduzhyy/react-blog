@@ -71,7 +71,7 @@ const Navbar = () => {
   const toggleDropdown = () => setIsDropdownOpen(!isDropdownOpen)
 
   const dropdownItems: DropdownItem[] = [
-    { label: 'My profile', to: '#' },
+    { label: 'My profile', to: '/profile' },
     { label: 'Settings', to: '#' }
   ]
 
