@@ -4,6 +4,7 @@ import NotFoundPage from '../component/NotFoundPage'
 import Root from '../component/Root'
 import LoginPage from '../feature/auth/LoginPage'
 import RegisterPage from '../feature/auth/RegisterPage'
+import HomePage from '../feature/home/HomePage'
 import ProfilePage from '../feature/profile/ProfilePage'
 
 const BasicDataRouter = () => {
@@ -11,6 +12,7 @@ const BasicDataRouter = () => {
     createRoutesFromElements(
       <Route path="/" Component={Root}>
         <Route path="/" Component={Layout}>
+          <Route path="/" Component={HomePage} />
           <Route path="/profile" Component={ProfilePage} />
           <Route path="*" Component={NotFoundPage} />
         </Route>

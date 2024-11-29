@@ -6,7 +6,7 @@ const Layout = () => {
     <NavBar />
     <div className="container mx-auto mt-4">
       <div className="flex flex-wrap justify-center">
-        <div className="w-full">
+        <div className="w-full max-w-3xl px-4">
           <Outlet />
         </div>
       </div>
