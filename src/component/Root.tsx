@@ -1,6 +1,7 @@
 import { FC, ReactNode } from 'react'
 import { Navigate, Outlet, useLocation } from 'react-router-dom'
 import HttpClient from '../lib/http'
+import { isTokenExpired } from '../lib/jwt'
 
 const routesWithNoAuth = ['/login', '/register']
 
@@ -12,7 +13,7 @@ const AuthRedirector: FC<AuthRedirectorProps> = ({ children }) => {
   const location = useLocation()
   const httpClient = new HttpClient()
 
-  if (!httpClient.getToken()) {
+  if (!isTokenExpired(httpClient.getToken())) {
     if (!routesWithNoAuth.includes(location.pathname))
       return <Navigate to="/login" state={{ from: location }} replace />
   } else {
