@@ -1,18 +1,23 @@
 import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from 'react-router-dom'
-import ChatComponent from '../component/chat/Chat'
-import Chat from '../component/chat/Chat'
-import LoginPage from '../feature/auth/LoginPage'
 import Layout from '../component/layout/Layout'
 import NotFoundPage from '../component/NotFoundPage'
+import Root from '../component/Root'
+import LoginPage from '../feature/auth/LoginPage'
+import RegisterPage from '../feature/auth/RegisterPage'
+import HomePage from '../feature/home/HomePage'
+import ProfilePage from '../feature/profile/ProfilePage'
 
 const BasicDataRouter = () => {
   const router = createBrowserRouter(
     createRoutesFromElements(
-      <Route path="/">
+      <Route path="/" Component={Root}>
         <Route path="/" Component={Layout}>
+          <Route path="/" Component={HomePage} />
+          <Route path="/profile" Component={ProfilePage} />
           <Route path="*" Component={NotFoundPage} />
         </Route>
         <Route path="/login" Component={LoginPage}/>
+        <Route path="/register" Component={RegisterPage}/>
         <Route path="/chat" Component={ChatComponent}/>
       </Route>
     )

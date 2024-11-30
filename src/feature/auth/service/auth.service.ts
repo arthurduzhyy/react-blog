@@ -1,5 +1,5 @@
 import HttpClient from '../../../lib/http'
-import { LoginForm } from './types'
+import { LoginForm, LoginResponse, RegisterForm } from './types'
 
 class AuthService {
   private httpClient: HttpClient
@@ -8,23 +8,36 @@ class AuthService {
     this.httpClient = new HttpClient()
   }
 
-  public async login(data: LoginForm): Promise<Response> {
+  public async login(data: LoginForm): Promise<LoginResponse | null> {
     try {
-      console.log(data)
-      const response = await this.httpClient.post('/users/login', {
-        body: JSON.stringify(data)
+      // Although TypeScript indicates that data is not compatible with BodyInit,
+      // the request method in HttpClient will automatically convert the object to JSON
+      // using JSON.stringify, so it works correctly.
+      const response = await this.httpClient.post<LoginResponse>('/users/login', {
+        body: data
       })
-      console.log(JSON.stringify(data))
-      if (!response.ok) {
-        throw new Error('Login failed')
-      }
-      const result = await response.json()
-      this.httpClient.setToken(result.token)
-      return result
-    } catch (error) {
-      console.error('Error during login:', error)
-      throw error
+      this.httpClient.setToken(response.token)
+      return response
+    } catch (e) {
+      console.error('Error during login:', e)
+      return null
     }
+  }
+
+  public async register(data: RegisterForm): Promise<boolean> {
+    try {
+      await this.httpClient.post('/users/register', {
+        body: data
+      })
+      return true
+    } catch (error) {
+      console.error('Error during registration:', error)
+      return false
+    }
+  }
+
+  public logout() {
+    this.httpClient.setToken(undefined)
   }
 }
 
