@@ -16,7 +16,6 @@ export const parseJwt = (token: string): Token | null => {
   try {
     return jwtDecode(token)
   } catch (e) {
-    console.error(e)
     return null
   }
 }
