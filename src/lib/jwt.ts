@@ -20,3 +20,11 @@ export const parseJwt = (token: string): Token | null => {
     return null
   }
 }
+
+export const isTokenExpired = (token: string): boolean => {
+  const parsedToken = parseJwt(token)
+  if (!parsedToken) return false
+
+  const currentTime = Math.floor(Date.now() / 1000)
+  return parsedToken.exp > currentTime
+}
