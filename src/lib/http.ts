@@ -42,6 +42,7 @@ class HttpClient {
     this.setHeader(options, 'Accept', 'application/json')
 
     if (this.isObject(options.body) && !(options.body instanceof FormData)) {
+      options.body = JSON.stringify(options.body)
       this.setHeader(options, 'Content-Type', 'application/json')
     }
 
