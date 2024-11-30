@@ -2,9 +2,12 @@ import { Button } from '@material-tailwind/react'
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 import FormInput from '../../component/FormInput'
+import useTitle from '../../hook/useTitle'
 import AuthService from './service/auth.service'
 
 const LoginPage = () => {
+  useTitle('Login')
+
   const {
     register,
     handleSubmit,
