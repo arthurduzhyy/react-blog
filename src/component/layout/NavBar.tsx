@@ -2,8 +2,8 @@ import { Bars3Icon } from '@heroicons/react/24/outline'
 import { UserIcon } from '@heroicons/react/24/solid'
 import { Menu, MenuHandler, MenuItem, MenuList } from '@material-tailwind/react'
 import { FC, useState } from 'react'
-import { Link } from 'react-router-dom'
-import AuthService from '../../feature/auth/service/auth.service'
+import { Link, useNavigate } from 'react-router-dom'
+import useAuth from '../../feature/auth/hook/useAuth'
 import ThemeToggleButton from '../../feature/theme/ThemeToggleButton'
 
 type DropdownItem = {
@@ -19,11 +19,13 @@ type DropdownProps = {
 }
 
 const Dropdown: FC<DropdownProps> = ({ isOpen, toggleDropdown, items }) => {
-  const authService = new AuthService()
+  const { logout } = useAuth()
+  const navigate = useNavigate()
 
   const handleLogout = () => {
-    authService.logout()
+    logout()
     toggleDropdown()
+    navigate('/login')
   }
 
   return <Menu
