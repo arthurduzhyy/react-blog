@@ -2,6 +2,8 @@ import classNames from 'classnames'
 import { FC, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import AuthService from '../../feature/auth/service/auth.service'
+import { Link, useNavigate } from 'react-router-dom'
+import useAuth from '../../feature/auth/hook/useAuth'
 import ThemeToggleButton from '../../feature/theme/ThemeToggleButton'
 
 
@@ -19,50 +21,38 @@ type DropdownProps = {
 
 
 const Dropdown: FC<DropdownProps> = ({ isOpen, toggleDropdown, items }) => {
-  const authService = new AuthService()
+  const { logout } = useAuth()
+  const navigate = useNavigate()
 
   const handleLogout = () => {
-    authService.logout()
+    logout()
     toggleDropdown()
+    navigate('/login')
   }
 
-  return <div
-    className={classNames(
-      'absolute z-10 font-normal bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600',
-      {
-        hidden: !isOpen
-      }
-    )}
-    style={{
-      top: '72px',
-      right: '88px',
-      transform: 'translateX(50%)'
-    }}
+  return <Menu
+    open={isOpen}
+    handler={toggleDropdown}
   >
-    <ul className="py-2 text-sm text-gray-700 dark:text-gray-400">
-      {items.map((item, index) => (
-        <li key={index}>
-          <Link
-            to={item.to}
-            className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-            onClick={item.onClick}
-          >
-            {item.label}
-          </Link>
-        </li>
-      ))}
-    </ul>
-
-    <div className="py-1">
-      <a
-        href="#"
-        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-        onClick={handleLogout}
+    <MenuHandler>
+      <UserIcon className="h-6 w-6 text-gray-900 dark:text-white" />
+    </MenuHandler>
+    <MenuList
+      className="dark:bg-gray-900 dark:text-white"
+    >
+      {items.map((item, index) => <MenuItem
+        key={index}
+        onClick={item.onClick}
+        className="mb-1"
       >
-        Logout
-      </a>
-    </div>
-  </div>
+        <Link to={item.to}>{item.label}</Link>
+      </MenuItem>)}
+
+      <hr className="my-3" />
+
+      <MenuItem onClick={handleLogout}>Logout</MenuItem>
+    </MenuList>
+  </Menu>
 }
 
 const Navbar = () => {
@@ -80,7 +70,7 @@ const Navbar = () => {
   return <nav className="bg-white border-gray-200 dark:border-gray-600 dark:bg-gray-900">
     <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl p-4">
       {/* Логотип */}
-      <a href="http://localhost:5173/" className="flex items-center space-x-3 rtl:space-x-reverse">
+      <Link to="/" className="flex items-center space-x-3 rtl:space-x-reverse">
         <img
           src="https://flowbite.com/docs/images/logo.svg"
           className="h-8"
@@ -88,8 +78,8 @@ const Navbar = () => {
         />
         <span className="sm:inline self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
             DDS Blog
-          </span>
-      </a>
+        </span>
+      </Link>
 
       <div className="flex items-center space-x-4">
         <button
@@ -100,23 +90,12 @@ const Navbar = () => {
           aria-expanded={isMenuOpen}
         >
           <span className="sr-only">Open main menu</span>
-          <svg
-            className="w-5 h-5"
-            aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 17 14"
-          >
-            <path
-              stroke="currentColor"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M1 1h15M1 7h15M1 13h15"
-            />
-          </svg>
+
+          <Bars3Icon className="h-6 w-6 text-gray-900 dark:text-white" />
         </button>
+
         <ThemeToggleButton />
+
         <button onClick={()=> navigate('/chat/inbox')}>
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
                stroke="currentColor" className="size-6 dark:text-white">
@@ -143,52 +122,51 @@ const Navbar = () => {
       </div>
     </div>
 
-    {isMenuOpen && (
+    {isMenuOpen && <div
+      id="mega-menu-full-dropdown"
+      className="block mt-1 bg-white border-gray-200 shadow-sm border-y dark:bg-gray-800 dark:border-gray-600"
+    >
       <div
-        id="mega-menu-full-dropdown"
-        className="block mt-1 bg-white border-gray-200 shadow-sm border-y dark:bg-gray-800 dark:border-gray-600"
+        className="grid max-w-screen-xl px-4 py-5 mx-auto text-gray-900 dark:text-white sm:grid-cols-2 md:grid-cols-3 md:px-6"
       >
-        <div
-          className="grid max-w-screen-xl px-4 py-5 mx-auto text-gray-900 dark:text-white sm:grid-cols-2 md:grid-cols-3 md:px-6"
-        >
-          <ul>
-            <li>
-              <a href="#" className="block p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700">Following</a>
-            </li>
-            <li>
-              <a href="#" className="block p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700">Segmentation</a>
-            </li>
-            <li>
-              <a href="#" className="block p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700">Marketing CRM</a>
-            </li>
-          </ul>
-          <ul>
-            <li>
-              <a href="#" className="block p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700">Online Stores</a>
-            </li>
-            <li>
-              <a href="#" className="block p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700">Segmentation</a>
-            </li>
-            <li>
-              <a href="#" className="block p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700">Marketing CRM</a>
-            </li>
-          </ul>
-          <ul>
-            <li>
-              <a href="#" className="block p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700">Audience
-                Management</a>
-            </li>
-            <li>
-              <a href="#" className="block p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700">Creative Tools</a>
-            </li>
-            <li>
-              <a href="#" className="block p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700">Marketing
-                Automation</a>
-            </li>
-          </ul>
-        </div>
+        <ul>
+          <li>
+            <a href="#" className="block p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700">Following</a>
+          </li>
+          <li>
+            <a href="#" className="block p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700">Segmentation</a>
+          </li>
+          <li>
+            <a href="#" className="block p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700">Marketing CRM</a>
+          </li>
+        </ul>
+        <ul>
+          <li>
+            <a href="#" className="block p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700">Online Stores</a>
+          </li>
+          <li>
+            <a href="#" className="block p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700">Segmentation</a>
+          </li>
+          <li>
+            <a href="#" className="block p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700">Marketing CRM</a>
+          </li>
+        </ul>
+        <ul>
+          <li>
+            <a href="#" className="block p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700">Audience
+              Management</a>
+          </li>
+          <li>
+            <a href="#" className="block p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700">Creative Tools</a>
+          </li>
+          <li>
+            <a href="#" className="block p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700">Marketing
+              Automation</a>
+          </li>
+        </ul>
       </div>
-    )}
+    </div>
+    }
   </nav>
 }
 
