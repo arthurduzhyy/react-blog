@@ -13,6 +13,10 @@ class UserService {
     return this.parsedUser(this.httpClient.getToken())
   }
 
+  public async getUserSubscribers(userId: string) {
+    return await this.httpClient.get<User[]>(`/subscribers/user/${userId}`)
+  }
+
   private parsedUser = (token: string): User | null => {
     const parsedToken = parseJwt(token)
     if (!parsedToken) return null

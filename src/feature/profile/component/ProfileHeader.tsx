@@ -1,10 +1,11 @@
 import { Cog6ToothIcon, PlusIcon } from '@heroicons/react/24/solid'
 import { Avatar, Button } from '@material-tailwind/react'
-import UserService from '../service/user.service'
+import { useNavigate } from 'react-router-dom'
+import useUser from '../hook/useUser'
 
 const ProfileHeader = () => {
-  const userService = new UserService()
-  const user = userService.getProfile()
+  const { user } = useUser()
+  const navigate = useNavigate()
 
   return <div className="flex flex-col sm:flex-row items-center justify-between p-4 pt-0 pr-0 pl-0">
     <div className="flex items-center space-x-4 p-4 pt-0 pr-0 pl-0">
@@ -23,6 +24,7 @@ const ProfileHeader = () => {
         type="button"
         color="indigo"
         variant="gradient"
+        onClick={() => navigate('/')}
       >
         <PlusIcon className="h-5 w-5 mr-1" /> new post
       </Button>
