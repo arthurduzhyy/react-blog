@@ -11,7 +11,7 @@ const ProfileHeader = () => {
       <Avatar src={user?.profilePicture} alt={`${user?.firstName} ${user?.lastName}`} size="xxl" />
       <div>
         <h1 className="text-2xl font-bold text-center sm:text-left">
-          {user?.userName}
+          {user?.username}
         </h1>
         <p className="text-gray-500 text-center sm:text-left">{user?.firstName} {user?.lastName}</p>
       </div>

@@ -2,7 +2,7 @@ export interface User {
   userId: string
   firstName: string
   lastName: string
-  userName: string
+  username: string
   email: string
   profilePicture: string
   gender?: string

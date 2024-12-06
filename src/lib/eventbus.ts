@@ -1,3 +1,4 @@
+// src/lib/eventbus.ts
 export type Callback = (payload?: any) => void
 export type Event = string | symbol
 
@@ -21,3 +22,4 @@ export const EventBus = {
 }
 
 export const EVENT_POSTS_UPDATE = Symbol('update.posts')
+export const EVENT_CHAT_CONNECTED = Symbol('chat.connected')
