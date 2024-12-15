@@ -3,6 +3,7 @@ import { PostAction, PostActionTypes } from './post.actions'
 
 interface PostState {
   postList: Post[]
+  userPostsList: Post[]
 }
 
 export const initialState: PostState = {

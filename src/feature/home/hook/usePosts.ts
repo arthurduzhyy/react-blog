@@ -38,7 +38,7 @@ const usePosts = () => {
     }
   }, [])
 
-  const getUserPosts = useCallback(async (userId : string)=> {
+  const getUserPosts = useCallback(async (userId: string) => {
     setLoading(true)
 
     try {
@@ -57,6 +57,7 @@ const usePosts = () => {
 
   return {
     posts: state.postList,
+    userPosts: state.userPostsList,
     loading,
     error,
     load,

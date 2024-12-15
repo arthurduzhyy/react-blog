@@ -1,11 +1,9 @@
 import { Tab, Tabs, TabsBody, TabsHeader } from '@material-tailwind/react'
 import { useEffect, useState } from 'react'
 import usePosts from '../../../home/hook/usePosts'
-import { useReaders } from '../../hook/useReaders'
 import useUser from '../../hook/useUser'
 import ProfileInfoTab from './ProfileInfoTab'
 import ProfilePostsTab from './ProfilePostsTab'
-import ProfileReadersTab from './ProfileReadersTab'
 
 const data = [
   { label: 'Posts', value: 'posts' },
@@ -17,14 +15,13 @@ const data = [
 const ProfileTab = () => {
   const [activeTab, setActiveTab] = useState('posts')
   const { user } = useUser()
-  const readers = useReaders()
-  const { posts, loading: postsLoading, error: postsError, getUserPosts } = usePosts()
+  const { userPosts, getUserPosts } = usePosts()
 
   useEffect(() => {
-    if (activeTab === 'posts' && user.id) {
-      getUserPosts(user.id)
+    if (activeTab === 'posts' && user?.userId) {
+      getUserPosts(user?.userId)
     }
-  }, [activeTab, getUserPosts, user.id])
+  }, [activeTab, getUserPosts, user?.userId])
 
   return <Tabs value={activeTab}>
     <TabsHeader className="overflow-x-auto sm:overflow-visible">
@@ -41,14 +38,9 @@ const ProfileTab = () => {
     </TabsHeader>
 
     <TabsBody>
-      <ProfileInfoTab user={user} />
-      {activeTab === 'posts' && (
-        <ProfilePostsTab
-          posts={posts}
-          loading={postsLoading}
-          error={postsError}
-        />
-      )}
+      <ProfileInfoTab user={user!} />
+
+      <ProfilePostsTab posts={userPosts} />
     </TabsBody>
   </Tabs>
 }
