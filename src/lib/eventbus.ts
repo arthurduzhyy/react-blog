@@ -21,3 +21,4 @@ export const EventBus = {
 }
 
 export const EVENT_POSTS_UPDATE = Symbol('update.posts')
+export const EVENT_NOTIFICATIONS_UPDATE = Symbol('update.notifications')
