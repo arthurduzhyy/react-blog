@@ -2,7 +2,7 @@ import { Tab, Tabs, TabsBody, TabsHeader } from '@material-tailwind/react'
 import { useEffect, useState } from 'react'
 import usePosts from '../../../home/hook/usePosts'
 import { useReaders } from '../../hook/useReaders'
-import UserService from '../../service/user.service'
+import useUser from '../../hook/useUser'
 import ProfileInfoTab from './ProfileInfoTab'
 import ProfilePostsTab from './ProfilePostsTab'
 import ProfileReadersTab from './ProfileReadersTab'
@@ -16,8 +16,7 @@ const data = [
 
 const ProfileTab = () => {
   const [activeTab, setActiveTab] = useState('posts')
-  const userService = new UserService()
-  const user = userService.getProfile()
+  const { user } = useUser()
   const readers = useReaders()
   const { posts, loading: postsLoading, error: postsError, getUserPosts } = usePosts()
 
