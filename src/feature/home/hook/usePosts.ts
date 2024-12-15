@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useReducer, useState } from 'react'
 import PostService from '../service/post.service'
 import { PostRequest } from '../service/types'
-import { addPostAction, setPostsAction } from '../store/post.actions'
+import { addPostAction, setPostsAction, setUsersPostsAction } from '../store/post.actions'
 import { initialState, postReducer } from '../store/post.reducer'
 
 const usePosts = () => {
@@ -38,6 +38,19 @@ const usePosts = () => {
     }
   }, [])
 
+  const getUserPosts = useCallback(async (userId : string)=> {
+    setLoading(true)
+
+    try {
+      const response = await postService.getByUserId(userId)
+      dispatch(setUsersPostsAction(response))
+    } catch (e) {
+      setError((e as Error).message)
+    } finally {
+      setLoading(false)
+    }
+  }, [])
+
   useEffect(() => {
     load()
   }, [])
@@ -47,7 +60,8 @@ const usePosts = () => {
     loading,
     error,
     load,
-    addPost
+    addPost,
+    getUserPosts
   }
 }
 

@@ -6,7 +6,8 @@ interface PostState {
 }
 
 export const initialState: PostState = {
-  postList: []
+  postList: [],
+  userPostsList: []
 }
 
 export const postReducer = (state: PostState = initialState, action: PostAction): PostState => {
@@ -20,6 +21,11 @@ export const postReducer = (state: PostState = initialState, action: PostAction)
       return {
         ...state,
         postList: action.payload as Post[]
+      }
+    case PostActionTypes.SET_USERS_POSTS:
+      return {
+        ...state,
+        userPostsList: action.payload as Post[]
       }
     default:
       return state

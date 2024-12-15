@@ -9,7 +9,8 @@ export interface PostAction {
 
 export enum PostActionTypes {
   ADD_POST = 'ADD_POST',
-  SET_POSTS = 'SET_POSTS'
+  SET_POSTS = 'SET_POSTS',
+  SET_USERS_POSTS = 'SET_USERS_POSTS'
 }
 
 export const addPostAction = (post: Post): PostAction => ({
@@ -19,5 +20,10 @@ export const addPostAction = (post: Post): PostAction => ({
 
 export const setPostsAction = (posts: Post[]): PostAction => ({
   type: PostActionTypes.SET_POSTS,
+  payload: posts
+})
+
+export const setUsersPostsAction = (posts: Post[]): PostAction => ({
+  type: PostActionTypes.SET_USERS_POSTS,
   payload: posts
 })

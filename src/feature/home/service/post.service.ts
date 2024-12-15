@@ -21,6 +21,10 @@ class PostService {
   public async getAll() {
     return await this.httpClient.get<Array<Post>>('/posts')
   }
+
+  public async getByUserId(userId: string) {
+    return await this.httpClient.get<Array<Post>>(`/posts/user/${userId}`)
+  }
 }
 
 export default PostService
