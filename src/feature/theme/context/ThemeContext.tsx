@@ -1,4 +1,4 @@
-import React, { createContext, useContext, ReactNode, useState, useEffect } from 'react'
+import { createContext, useContext, ReactNode, useState, useEffect } from 'react'
 import { ThemeProvider as MaterialThemeProvider } from '@material-tailwind/react'
 
 interface ThemeContextProps {
@@ -22,14 +22,14 @@ export const useTheme = () => {
 
 export const ThemeProvider = ({ children }: ThemeContextProps) => {
   const [theme, setTheme] = useState<'light' | 'dark'>(() => {
-    // Витягуємо початкову тему з localStorage або встановлюємо 'light'
+
     return localStorage.getItem('theme') === 'dark' ? 'dark' : 'light'
   })
 
   const toggleTheme = () => {
     setTheme((prevTheme) => {
       const newTheme = prevTheme === 'light' ? 'dark' : 'light'
-      localStorage.setItem('theme', newTheme) // Зберігаємо нову тему
+      localStorage.setItem('theme', newTheme)
       return newTheme
     })
   }
@@ -43,7 +43,6 @@ export const ThemeProvider = ({ children }: ThemeContextProps) => {
     }
   }, [theme])
 
-  // Кастомна тема для Material Tailwind (за потреби)
   const customTheme = {
     button: {
       defaultProps: {

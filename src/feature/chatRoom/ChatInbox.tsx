@@ -1,10 +1,10 @@
 import { List } from '@material-tailwind/react'
 import { useEffect } from 'react'
-import LoadingSpinner from '../../../component/LoadingSpinner'
-import useTitle from '../../../hook/useTitle'
-import { EVENT_POSTS_UPDATE, EventBus } from '../../../lib/eventbus'
-import ChatCard from '../component/ChatCard'
-import { useChat } from '../hook/useChat'
+import LoadingSpinner from '../../component/LoadingSpinner'
+import useTitle from '../../hook/useTitle'
+import { EVENT_POSTS_UPDATE, EventBus } from '../../lib/eventbus'
+import ChatCard from './component/ChatCard'
+import { useChat } from './hook/useChat'
 
 
 const ChatInbox = () => {

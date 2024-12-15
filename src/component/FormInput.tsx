@@ -6,7 +6,7 @@ interface FormInputProps {
   placeholder: string
   options: any
   register: any
-  errors: any
+  errors: any //TODO: fix it
 }
 
 const FormInput: React.FC<FormInputProps> = ({ name, type, placeholder, options, register, errors }) => {

@@ -26,6 +26,9 @@ export const useChat = () => {
     }
   }, [chatService])
 
+
+
+
   const connectToChat = useCallback(async (chatId: string) => {
     setLoading(true)
     try {
