@@ -6,6 +6,7 @@ import LoginPage from '../feature/auth/LoginPage'
 import RegisterPage from '../feature/auth/RegisterPage'
 import HomePage from '../feature/home/HomePage'
 import ProfilePage from '../feature/profile/ProfilePage'
+import UserSettingsContainer from '../feature/userSettings/UserSettingsContainer'
 
 const BasicDataRouter = () => {
   const router = createBrowserRouter(
@@ -14,6 +15,7 @@ const BasicDataRouter = () => {
         <Route path="/" Component={Layout}>
           <Route path="/" Component={HomePage} />
           <Route path="/profile" Component={ProfilePage} />
+          <Route path="settings" Component={UserSettingsContainer} />
           <Route path="*" Component={NotFoundPage} />
         </Route>
         <Route path="/login" Component={LoginPage}/>
